@@ -1,0 +1,7 @@
+#compiler class files
+target/
+
+#intellij
+.idea/
+.DS_Store/
+twitter.iml
