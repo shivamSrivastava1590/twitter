@@ -1,4 +1,4 @@
-package com.example.config.model.auth;
+package com.example.twitter_api;
 
 import lombok.Getter;
 import lombok.Setter;

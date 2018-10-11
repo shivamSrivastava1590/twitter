@@ -1,6 +1,6 @@
-package com.example.config;
+package com.example.twitter_service.config;
 
-import com.example.config.model.Configuration;
+import com.example.twitter_api.Configuration;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
