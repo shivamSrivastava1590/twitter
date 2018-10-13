@@ -14,6 +14,7 @@ public class TwitterApplication extends Application<TwitterConfiguration> {
     @Override
     public void run(TwitterConfiguration twitterConfiguration, Environment environment) throws Exception {
         final TwitterResource twitterResource = new TwitterResource(twitterConfiguration.getTweet());
+
         environment.jersey().register(twitterResource);
     }
 }

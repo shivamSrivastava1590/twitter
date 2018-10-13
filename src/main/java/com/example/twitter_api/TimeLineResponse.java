@@ -10,6 +10,15 @@ public class TimeLineResponse {
     private List<String> timeLineResponse;
     private Response.Status status;
 
+    public TimeLineResponse() {
+    }
+
+    public TimeLineResponse(List<String> timeLineResponse, Response.Status status) {
+
+        this.timeLineResponse = timeLineResponse;
+        this.status = status;
+    }
+
     @JsonProperty
     public Response.Status getStatus() {
         return status;
