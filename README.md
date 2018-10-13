@@ -32,3 +32,14 @@ What things you need to install the software.
     (POST) http://localhost:8080/api/1.0/twitter/tweet 
     (GET) http://localhost:8080/api/1.0/twitter/timeline
 ```
+
+#### (configuration_files)
+
+```
+1. Change the keys in the file 'process.sh' to access your twitter account.
+2. Run command 'mvn clean install' to create executable jar file.
+3. Run command './process.sh' to start your service.
+4. Using Postman call:
+    (POST) http://localhost:8080/api/1.0/twitter/tweet 
+    (GET) http://localhost:8080/api/1.0/twitter/timeline
+```

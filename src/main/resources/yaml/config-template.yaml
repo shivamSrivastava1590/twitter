@@ -1,0 +1,5 @@
+authConfig:
+    consumerKey: ${consumerKey}
+    consumerSecret: ${consumerSecret}
+    accessToken: ${accessToken}
+    accessTokenSecret: ${accessTokenSecret}
