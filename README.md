@@ -14,7 +14,7 @@ What things you need to install the software.
 1. Java 1.8 or above
 2. Maven 3.5 or above
 ```
-### How to Run
+### How to Run (Change branch to see feature)
 ##### (master)
 ```
 1. Change the keys in twitter-config.yaml to access your twitter account
@@ -42,4 +42,10 @@ What things you need to install the software.
 4. Using Postman call:
     (POST) http://localhost:8080/api/1.0/twitter/tweet 
     (GET) http://localhost:8080/api/1.0/twitter/timeline
+```
+
+#### (logging)
+
+```
+1. Added logging in application.
 ```

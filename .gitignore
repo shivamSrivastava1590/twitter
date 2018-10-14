@@ -6,5 +6,4 @@ target/
 .DS_Store/
 twitter.iml
 
-process.sh
 src/main/resources/yaml/twitter-config.yaml
