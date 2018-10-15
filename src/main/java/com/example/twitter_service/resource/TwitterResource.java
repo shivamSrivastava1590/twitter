@@ -56,7 +56,7 @@ public class TwitterResource {
     @GET
     @Timed
     @Path("/timeline")
-    public TimeLineResponse getTimeline() {
+    public TimeLineResponse getTimeline(@DefaultValue("") @QueryParam("filter") String filter) {
         log.info("Getting user timeline");
         TimeLineResponse timeLineResponse = new TimeLineResponse();
         List<String> timeLineList = Collections.emptyList();
@@ -65,6 +65,7 @@ public class TwitterResource {
             timeLineList = TwitterDriver.getTwitterHandle().getHomeTimeline()
                     .stream()
                     .map(Status::getText)
+                    .filter(text -> text.contains(filter))
                     .collect(Collectors.toList());
             if (timeLineList.size() == 0) {
                 throw new WebApplicationException("There are no messages in your timeline" , Response.Status.NOT_FOUND);
