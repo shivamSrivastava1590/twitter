@@ -50,7 +50,7 @@ What things you need to install the software.
 1. Added logging in application.
 ```
 
-#### (servicesAndResources)
+#### (servicesAndResources, pojos)
 
 ```
 1. Create a file 'keys.sh' which contains your keys to access twitter, you have to export those keys.

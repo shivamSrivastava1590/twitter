@@ -1,8 +1,9 @@
 package com.example.twitter_service.resource;
 
 import com.codahale.metrics.annotation.Timed;
-import com.example.twitter_api.TimeLineResponse;
-import com.example.twitter_api.TweetResponse;
+import com.example.twitter_api.models.message.TimeLineResponse;
+import com.example.twitter_api.models.message.TweetResponse;
+import com.example.twitter_api.models.message.User;
 import com.example.twitter_client.TwitterDriver;
 import lombok.extern.slf4j.Slf4j;
 import twitter4j.Status;
@@ -34,8 +35,16 @@ public class TwitterResource {
     public TweetResponse postTweetMessage() {
         log.info("Posting tweet message");
         TweetResponse result = new TweetResponse();
+        User user = new User();
+        Status status = null;
+        Twitter twitter = null;
         try {
-            Status status = TwitterDriver.getTwitterHandle().updateStatus(tweet);
+            twitter = TwitterDriver.getTwitterHandle();
+            status = twitter.updateStatus(tweet);
+            user.setName(twitter.getScreenName());
+            user.setProfileImageUrl(twitter.showUser(twitter.getId()).getProfileImageURL());
+            result.setCreatedAt(status.getCreatedAt().toString());
+            result.setUser(user);
             result.setStatus(Response.Status.CREATED);
             result.setMessage("Successfully updated the status to : " + status.getText());
         } catch (TwitterException e) {

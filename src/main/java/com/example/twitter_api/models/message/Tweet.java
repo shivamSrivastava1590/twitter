@@ -1,11 +1,10 @@
-package com.example.twitter_api;
+package com.example.twitter_api.models.message;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Tweet {
 
     private long id;
-
     private String tweet;
     
     public Tweet(long id, String tweet) {

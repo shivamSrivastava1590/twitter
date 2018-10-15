@@ -1,4 +1,4 @@
-package com.example.twitter_api;
+package com.example.twitter_api.models.configuration;
 
 import lombok.Getter;
 import lombok.Setter;

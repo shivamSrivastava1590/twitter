@@ -1,6 +1,6 @@
 package com.example.twitter_service.resource;
 
-import com.example.twitter_api.TimeLineResponse;
+import com.example.twitter_api.models.message.TimeLineResponse;
 import io.dropwizard.testing.junit.ResourceTestRule;
 import org.junit.*;
 import org.mockito.Mockito;

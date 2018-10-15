@@ -1,6 +1,6 @@
 package com.example.twitter_service.config;
 
-import com.example.twitter_api.Configuration;
+import com.example.twitter_api.models.configuration.Configuration;
 import lombok.extern.slf4j.Slf4j;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;

@@ -11,3 +11,4 @@ cat src/main/resources/yaml/twitter-config.yaml
 rm -f temp.yml
 
 java -jar target/twitter-1.0-SNAPSHOT-shaded.jar server src/main/resources/yaml/twitter-data.yaml
+rm -f src/main/resources/yaml/twitter-config.yaml

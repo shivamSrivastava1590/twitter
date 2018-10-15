@@ -1,6 +1,6 @@
 package com.example.twitter_client;
 
-import com.example.twitter_api.Configuration;
+import com.example.twitter_api.models.configuration.Configuration;
 import com.example.twitter_service.config.Config;
 import lombok.extern.slf4j.Slf4j;
 import twitter4j.Twitter;

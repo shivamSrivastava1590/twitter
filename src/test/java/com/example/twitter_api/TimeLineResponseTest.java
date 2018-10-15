@@ -1,5 +1,6 @@
 package com.example.twitter_api;
 
+import com.example.twitter_api.models.message.TimeLineResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.dropwizard.jackson.Jackson;
 import org.junit.BeforeClass;
@@ -7,7 +8,6 @@ import org.junit.Test;
 
 import javax.ws.rs.core.Response;
 import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import static org.assertj.core.api.Assertions.assertThat;

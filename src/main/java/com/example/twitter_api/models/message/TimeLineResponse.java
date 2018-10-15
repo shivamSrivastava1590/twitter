@@ -1,4 +1,4 @@
-package com.example.twitter_api;
+package com.example.twitter_api.models.message;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -14,7 +14,6 @@ public class TimeLineResponse {
     }
 
     public TimeLineResponse(List<String> timeLineResponse, Response.Status status) {
-
         this.timeLineResponse = timeLineResponse;
         this.status = status;
     }

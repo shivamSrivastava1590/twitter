@@ -1,5 +1,6 @@
-package com.example.twitter_api;
+package com.example.twitter_api.models.configuration;
 
+import com.example.twitter_api.models.configuration.AuthConfig;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
