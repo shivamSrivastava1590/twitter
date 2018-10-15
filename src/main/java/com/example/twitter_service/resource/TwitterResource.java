@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -25,8 +26,8 @@ public class TwitterResource {
     private String tweet;
 
     public TwitterResource(String tweet) {
+        this.tweet = Optional.of(tweet).orElse("");
         log.info("Created twitter resource with data : {} ", tweet);
-        this.tweet = tweet;
     }
 
     @POST
