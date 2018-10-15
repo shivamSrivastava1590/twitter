@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 
-export consumerKey="IuyRbIuFMdi7Qr2K3C1OARJD"
-export consumerSecret="UAeLMrQDDrHaAgPcoNa2I9Xdlx0pujW9LAy6AYTY8bqidzLs0"
-export accessToken="894411261248548864-ihvuaiU28qQqV6N1N24hMasVvVXuLL"
-export accessTokenSecret="rLqHbPC1r5fIUJc3aSvcDyYDDuaflAOZkzArdHTB8S7B"
+source keys.sh
 
 rm -f src/main/resources/yaml/twitter-config.yaml temp.yml
 ( echo "cat <<EOF >src/main/resources/yaml/twitter-config.yaml";

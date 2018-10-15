@@ -21,12 +21,10 @@ import java.util.stream.Collectors;
 @Produces(MediaType.APPLICATION_JSON)
 public class TwitterResource {
 
-    private TwitterDriver twitterDriver;
     private String tweet;
 
     public TwitterResource(String tweet) {
         log.info("Created twitter resource with data : {} ", tweet);
-        twitterDriver = new TwitterDriver();
         this.tweet = tweet;
     }
 
@@ -36,9 +34,8 @@ public class TwitterResource {
     public TweetResponse postTweetMessage() {
         log.info("Posting tweet message");
         TweetResponse result = new TweetResponse();
-        Twitter twitter = twitterDriver.getTwitterHandle();
         try {
-            Status status = twitter.updateStatus(tweet);
+            Status status = TwitterDriver.getTwitterHandle().updateStatus(tweet);
             result.setStatus(Response.Status.CREATED);
             result.setMessage("Successfully updated the status to : " + status.getText());
         } catch (TwitterException e) {
@@ -55,9 +52,8 @@ public class TwitterResource {
         TimeLineResponse timeLineResponse = new TimeLineResponse();
         List<String> timeLineList = Collections.emptyList();
         timeLineResponse.setTimeLineResponse(timeLineList);
-        Twitter twitter = twitterDriver.getTwitterHandle();
         try {
-            timeLineList = twitter.getHomeTimeline()
+            timeLineList = TwitterDriver.getTwitterHandle().getHomeTimeline()
                     .stream()
                     .map(Status::getText)
                     .collect(Collectors.toList());

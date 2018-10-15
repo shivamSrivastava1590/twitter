@@ -10,28 +10,25 @@ import twitter4j.conf.ConfigurationBuilder;
 @Slf4j
 public class TwitterDriver {
 
-    private Configuration configuration = Config.getConfig();
-    private ConfigurationBuilder configurationBuilder;
-    private TwitterFactory twitterFactory;
+    private static Configuration configuration = Config.getConfig();
+    private static ConfigurationBuilder configurationBuilder = buildTwitterConfig();
+    private static TwitterFactory twitter = new TwitterFactory(configurationBuilder.build());
 
-    public TwitterDriver() {
+    private TwitterDriver() {
+    }
+
+    private static ConfigurationBuilder buildTwitterConfig() {
         log.info("Configuring driver with default keys");
-        configurationBuilder = new ConfigurationBuilder();
+        ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
         configurationBuilder.setDebugEnabled(true)
                 .setOAuthConsumerKey(configuration.getAuthConfig().getConsumerKey())
                 .setOAuthConsumerSecret(configuration.getAuthConfig().getConsumerSecret())
                 .setOAuthAccessToken(configuration.getAuthConfig().getAccessToken())
                 .setOAuthAccessTokenSecret(configuration.getAuthConfig().getAccessTokenSecret());
-        twitterFactory = new TwitterFactory(configurationBuilder.build());
+        return configurationBuilder;
     }
 
-    public TwitterDriver(ConfigurationBuilder configurationBuilder) {
-        log.info("Configuring driver with client keys");
-        this.configurationBuilder = configurationBuilder;
-        twitterFactory = new TwitterFactory(configurationBuilder.build());
-    }
-
-    public Twitter getTwitterHandle() {
-        return twitterFactory.getInstance();
+    public static Twitter getTwitterHandle() {
+        return twitter.getInstance();
     }
 }
