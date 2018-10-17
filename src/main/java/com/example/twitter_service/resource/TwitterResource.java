@@ -9,13 +9,12 @@ import lombok.extern.slf4j.Slf4j;
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
-
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -23,35 +22,35 @@ import java.util.stream.Collectors;
 @Produces(MediaType.APPLICATION_JSON)
 public class TwitterResource {
 
-    private String tweet;
+    private TwitterDriver twitterDriver;
 
-    public TwitterResource(String tweet) {
-        this.tweet = Optional.of(tweet).orElse("");
-        log.info("Created twitter resource with data : {} ", tweet);
+    @Inject
+    public TwitterResource(TwitterDriver twitterDriver) {
+        this.twitterDriver = twitterDriver;
     }
 
     @POST
     @Path("/tweet")
     @Timed
-    public TweetResponse postTweetMessage() {
+    public TweetResponse postTweetMessage(@DefaultValue("") @QueryParam("tweet") String tweet) {
         log.info("Posting tweet message");
-        TweetResponse result = new TweetResponse();
+        TweetResponse tweetResponse = new TweetResponse();
         User user = new User();
         Status status = null;
         Twitter twitter = null;
         try {
-            twitter = TwitterDriver.getTwitterHandle();
+            twitter = twitterDriver.getTwitterHandle();
             status = twitter.updateStatus(tweet);
             user.setName(twitter.getScreenName());
             user.setProfileImageUrl(twitter.showUser(twitter.getId()).getProfileImageURL());
-            result.setCreatedAt(status.getCreatedAt().toString());
-            result.setUser(user);
-            result.setStatus(Response.Status.CREATED);
-            result.setMessage("Successfully updated the status to : " + status.getText());
+            tweetResponse.setCreatedAt(status.getCreatedAt().toString());
+            tweetResponse.setUser(user);
+            tweetResponse.setStatus(Response.Status.CREATED);
+            tweetResponse.setMessage("Successfully updated the status to : " + status.getText());
         } catch (TwitterException e) {
             throw new WebApplicationException(e.getMessage(), e.getStatusCode());
         }
-        return result;
+        return tweetResponse;
     }
 
     @GET
@@ -62,8 +61,10 @@ public class TwitterResource {
         TimeLineResponse timeLineResponse = new TimeLineResponse();
         List<String> timeLineList = Collections.emptyList();
         timeLineResponse.setTimeLineResponse(timeLineList);
+        Twitter twitter = null;
         try {
-            timeLineList = TwitterDriver.getTwitterHandle().getHomeTimeline()
+            twitter = twitterDriver.getTwitterHandle();
+            timeLineList = twitter.getHomeTimeline()
                     .stream()
                     .map(Status::getText)
                     .filter(text -> text.contains(filter))

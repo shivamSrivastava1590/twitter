@@ -64,11 +64,24 @@ What things you need to install the software.
 #### (streams, optionals)
 
 ```
-1. Create a file 'keys.sh' which contains your keys to access twitter, you have to export those keys.
+1. Create a file 'keys.sh' which contains your keys to access twitter, you have to export those keys in the file.
 2. Run command 'mvn clean install' to create executable jar file.
 3. Run command './process.sh' to start your service.
 4. Using Postman call:
     (POST) http://localhost:8080/api/1.0/twitter/tweet 
+    (GET) http://localhost:8080/api/1.0/twitter/timeline
+    (GET) http://localhost:8080/api/1.0/twitter/timeline?filter=filterWord
+```
+
+#### (dependencyInjection)
+
+```
+1. Create a file 'keys.sh' which contains your keys to access twitter, you have to export those keys in the file.
+2. Run command 'mvn clean install' to create executable jar file.
+3. Run command './process.sh' to start your service.
+4. Using Postman call:
+    (POST) http://localhost:8080/api/1.0/twitter/tweet 
+    (POST) http://localhost:8080/api/1.0/twitter/tweet?tweet=Hello Twitter
     (GET) http://localhost:8080/api/1.0/twitter/timeline
     (GET) http://localhost:8080/api/1.0/twitter/timeline?filter=filterWord
 ```

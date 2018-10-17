@@ -11,24 +11,23 @@ import twitter4j.conf.ConfigurationBuilder;
 public class TwitterDriver {
 
     private static Configuration configuration = Config.getConfig();
-    private static ConfigurationBuilder configurationBuilder = buildTwitterConfig();
-    private static TwitterFactory twitter = new TwitterFactory(configurationBuilder.build());
+    private static TwitterFactory twitter;
+    private ConfigurationBuilder configurationBuilder;
 
-    private TwitterDriver() {
-    }
-
-    private static ConfigurationBuilder buildTwitterConfig() {
+    public TwitterDriver() {
         log.info("Configuring driver with default keys");
-        ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
+        configurationBuilder = new ConfigurationBuilder();
         configurationBuilder.setDebugEnabled(true)
                 .setOAuthConsumerKey(configuration.getAuthConfig().getConsumerKey())
                 .setOAuthConsumerSecret(configuration.getAuthConfig().getConsumerSecret())
                 .setOAuthAccessToken(configuration.getAuthConfig().getAccessToken())
                 .setOAuthAccessTokenSecret(configuration.getAuthConfig().getAccessTokenSecret());
-        return configurationBuilder;
     }
 
-    public static Twitter getTwitterHandle() {
+    public Twitter getTwitterHandle() {
+        if (twitter == null) {
+            twitter = new TwitterFactory(configurationBuilder.build());
+        }
         return twitter.getInstance();
     }
 }
