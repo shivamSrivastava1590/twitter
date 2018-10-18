@@ -73,7 +73,7 @@ What things you need to install the software.
     (GET) http://localhost:8080/api/1.0/twitter/timeline?filter=filterWord
 ```
 
-#### (dependencyInjection)
+#### (dependencyInjection, caching)
 
 ```
 1. Create a file 'keys.sh' which contains your keys to access twitter, you have to export those keys in the file.

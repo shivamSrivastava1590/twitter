@@ -1,10 +1,13 @@
 package com.example.twitter_service.resource;
 
 import com.codahale.metrics.annotation.Timed;
+import com.example.caching.ApplicationCache;
+import com.example.caching.model.CachedResponse;
 import com.example.twitter_api.models.message.TimeLineResponse;
 import com.example.twitter_api.models.message.TweetResponse;
 import com.example.twitter_api.models.message.User;
 import com.example.twitter_client.TwitterDriver;
+import io.dropwizard.jersey.caching.CacheControl;
 import lombok.extern.slf4j.Slf4j;
 import twitter4j.Status;
 import twitter4j.Twitter;
@@ -15,6 +18,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -23,10 +28,12 @@ import java.util.stream.Collectors;
 public class TwitterResource {
 
     private TwitterDriver twitterDriver;
+    private ApplicationCache applicationCache;
 
     @Inject
-    public TwitterResource(TwitterDriver twitterDriver) {
+    public TwitterResource(TwitterDriver twitterDriver, ApplicationCache applicationCache) {
         this.twitterDriver = twitterDriver;
+        this.applicationCache = applicationCache;
     }
 
     @POST
@@ -56,9 +63,14 @@ public class TwitterResource {
     @GET
     @Timed
     @Path("/timeline")
+    @CacheControl(maxAge = 6, maxAgeUnit = TimeUnit.HOURS)
     public TimeLineResponse getTimeline(@DefaultValue("") @QueryParam("filter") String filter) {
         log.info("Getting user timeline");
         TimeLineResponse timeLineResponse = new TimeLineResponse();
+        Optional<CachedResponse> timeLineResponseOptional = applicationCache.getResponseFromCache(filter);
+        if (timeLineResponseOptional.isPresent()) {
+            return timeLineResponseOptional.get().getTimeLineResponse();
+        }
         List<String> timeLineList = Collections.emptyList();
         timeLineResponse.setTimeLineResponse(timeLineList);
         Twitter twitter = null;
@@ -78,6 +90,7 @@ public class TwitterResource {
         } catch (TwitterException e) {
             throw new WebApplicationException(e.getMessage(), e.getStatusCode());
         }
+        applicationCache.updateCache(filter, timeLineResponse);
         return timeLineResponse;
     }
 }

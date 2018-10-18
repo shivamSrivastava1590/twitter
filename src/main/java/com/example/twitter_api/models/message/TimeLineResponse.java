@@ -3,9 +3,10 @@ package com.example.twitter_api.models.message;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.ws.rs.core.Response;
+import java.io.Serializable;
 import java.util.List;
 
-public class TimeLineResponse {
+public class TimeLineResponse implements Serializable{
 
     private List<String> timeLineResponse;
     private Response.Status status;

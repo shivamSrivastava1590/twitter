@@ -1,10 +1,13 @@
 package com.example.twitter_api.models.message;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.ToString;
 
 import javax.ws.rs.core.Response;
+import java.io.Serializable;
 
-public class TweetResponse {
+@ToString
+public class TweetResponse implements Serializable{
 
     private String message;
     private Response.Status status;
