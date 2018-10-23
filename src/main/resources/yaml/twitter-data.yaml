@@ -1,1 +1,6 @@
 tweet: Hello from shivam twitter program
+
+server:
+  type: simple
+  rootPath: /api/
+  applicationContextPath: /

@@ -7,7 +7,7 @@ import com.example.twitter_api.models.message.TimeLineResponse;
 import com.example.twitter_api.models.message.TweetResponse;
 import com.example.twitter_api.models.message.User;
 import com.example.twitter_client.TwitterDriver;
-import io.dropwizard.jersey.caching.CacheControl;
+import com.example.twitter_service.views.TimeLineResponseView;
 import lombok.extern.slf4j.Slf4j;
 import twitter4j.Status;
 import twitter4j.Twitter;
@@ -19,12 +19,11 @@ import javax.ws.rs.core.Response;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Slf4j
-@Path("/api/1.0/twitter")
-@Produces(MediaType.APPLICATION_JSON)
+@Path("/1.0/twitter")
+@Produces({MediaType.TEXT_HTML, MediaType.APPLICATION_JSON})
 public class TwitterResource {
 
     private TwitterDriver twitterDriver;
@@ -63,13 +62,12 @@ public class TwitterResource {
     @GET
     @Timed
     @Path("/timeline")
-    @CacheControl(maxAge = 6, maxAgeUnit = TimeUnit.HOURS)
-    public TimeLineResponse getTimeline(@DefaultValue("") @QueryParam("filter") String filter) {
+    public TimeLineResponseView getTimeline(@DefaultValue("") @QueryParam("filter") String filter) {
         log.info("Getting user timeline");
         TimeLineResponse timeLineResponse = new TimeLineResponse();
         Optional<CachedResponse> timeLineResponseOptional = applicationCache.getResponseFromCache(filter);
         if (timeLineResponseOptional.isPresent()) {
-            return timeLineResponseOptional.get().getTimeLineResponse();
+            return new TimeLineResponseView(TimeLineResponseView.Template.TIMELINE_RESPONSE, timeLineResponseOptional.get().getTimeLineResponse().getTimeLineResponse());
         }
         List<String> timeLineList = Collections.emptyList();
         timeLineResponse.setTimeLineResponse(timeLineList);
@@ -91,6 +89,6 @@ public class TwitterResource {
             throw new WebApplicationException(e.getMessage(), e.getStatusCode());
         }
         applicationCache.updateCache(filter, timeLineResponse);
-        return timeLineResponse;
+        return new TimeLineResponseView(TimeLineResponseView.Template.TIMELINE_RESPONSE, timeLineResponse.getTimeLineResponse());
     }
 }
