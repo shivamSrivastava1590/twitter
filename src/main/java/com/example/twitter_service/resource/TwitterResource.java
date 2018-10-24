@@ -62,12 +62,13 @@ public class TwitterResource {
     @GET
     @Timed
     @Path("/timeline")
-    public TimeLineResponseView getTimeline(@DefaultValue("") @QueryParam("filter") String filter) {
+    public TimeLineResponse getTimeline(@DefaultValue("") @QueryParam("filter") String filter) {
         log.info("Getting user timeline");
         TimeLineResponse timeLineResponse = new TimeLineResponse();
         Optional<CachedResponse> timeLineResponseOptional = applicationCache.getResponseFromCache(filter);
         if (timeLineResponseOptional.isPresent()) {
-            return new TimeLineResponseView(TimeLineResponseView.Template.TIMELINE_RESPONSE, timeLineResponseOptional.get().getTimeLineResponse().getTimeLineResponse());
+//            return new TimeLineResponseView(TimeLineResponseView.Template.TIMELINE_RESPONSE, timeLineResponseOptional.get().getTimeLineResponse().getTimeLineResponse());
+            return timeLineResponseOptional.get().getTimeLineResponse();
         }
         List<String> timeLineList = Collections.emptyList();
         timeLineResponse.setTimeLineResponse(timeLineList);
@@ -89,6 +90,7 @@ public class TwitterResource {
             throw new WebApplicationException(e.getMessage(), e.getStatusCode());
         }
         applicationCache.updateCache(filter, timeLineResponse);
-        return new TimeLineResponseView(TimeLineResponseView.Template.TIMELINE_RESPONSE, timeLineResponse.getTimeLineResponse());
+//        return new TimeLineResponseView(TimeLineResponseView.Template.TIMELINE_RESPONSE, timeLineResponse.getTimeLineResponse());
+        return timeLineResponse;
     }
 }

@@ -21,7 +21,7 @@ public class TwitterApplication extends Application<TwitterConfiguration>{
 
     @Override
     public void initialize(Bootstrap<TwitterConfiguration> bootstrap) {
-        bootstrap.addBundle(new AssetsBundle("/assets/", "/"));
+        bootstrap.addBundle(new AssetsBundle("/assets/", "/", "index.html", "asset1"));
         bootstrap.addBundle(new ViewBundle<>());
     }
 

@@ -2,13 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Twitter Application</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="twitter.js"></script>
 </head>
 <body>
-    <h1>Hello</h1>
-    <form action="http://localhost:8080/api/1.0/twitter/timeline">
-        <button id="timeline" type="submit">Get Timeline</button>
-    </form>
+
+<h2>Twitter App</h2>
+<button id="timelineResponse" onclick="updateStatus(); return false">Get Timeline</button>
+
+<div id="output">
+</div>
 
 </body>
 </html>
