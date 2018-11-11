@@ -21,7 +21,7 @@ public class TimeLineResponseTest {
     @BeforeClass
     public static void setUp() {
         timeLineResponse.setStatus(Response.Status.OK);
-        timeLineResponse.setTimeLineResponse(new ArrayList<>(Arrays.asList("response_1", "response_2")));
+//        timeLineResponse.setTimeLineResponse(new ArrayList<>(Arrays.asList("response_1", "response_2")));
     }
 
     @Test

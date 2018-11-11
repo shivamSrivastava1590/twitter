@@ -25,14 +25,14 @@ public class TwitterResourceTest {
     @Before
     public void before() {
         timeLineResponse.setStatus(Response.Status.OK);
-        timeLineResponse.setTimeLineResponse(new ArrayList<>(Arrays.asList("response_1", "response_2")));
+//        timeLineResponse.setTimeLineResponse(new ArrayList<>(Arrays.asList("response_1", "response_2")));
     }
 
     @Test
     public void test1() throws ExecutionException, InterruptedException {
 
         when(timeLineResponseMock.getStatus()).thenReturn(Response.Status.OK);
-        when(timeLineResponseMock.getTimeLineResponse()).thenReturn(new ArrayList<>(Arrays.asList("response_1", "response_2")));
+//        when(timeLineResponseMock.getTimeLineResponse()).thenReturn(new ArrayList<>(Arrays.asList("response_1", "response_2")));
 
 
 //        TimeLineResponse timeLineResponse = resourcesRule.getJerseyTest().target("/api/1.0/twitter/timeline").request().get(TimeLineResponse.class);

@@ -4,10 +4,10 @@ import com.codahale.metrics.annotation.Timed;
 import com.example.caching.ApplicationCache;
 import com.example.caching.model.CachedResponse;
 import com.example.twitter_api.models.message.TimeLineResponse;
+import com.example.twitter_api.models.message.Timelines;
 import com.example.twitter_api.models.message.TweetResponse;
 import com.example.twitter_api.models.message.User;
 import com.example.twitter_client.TwitterDriver;
-import com.example.twitter_service.views.TimeLineResponseView;
 import lombok.extern.slf4j.Slf4j;
 import twitter4j.Status;
 import twitter4j.Twitter;
@@ -16,10 +16,7 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @Slf4j
 @Path("/1.0/twitter")
@@ -64,33 +61,40 @@ public class TwitterResource {
     @Path("/timeline")
     public TimeLineResponse getTimeline(@DefaultValue("") @QueryParam("filter") String filter) {
         log.info("Getting user timeline");
-        TimeLineResponse timeLineResponse = new TimeLineResponse();
+        TimeLineResponse timeLineResponses = new TimeLineResponse();
         Optional<CachedResponse> timeLineResponseOptional = applicationCache.getResponseFromCache(filter);
         if (timeLineResponseOptional.isPresent()) {
 //            return new TimeLineResponseView(TimeLineResponseView.Template.TIMELINE_RESPONSE, timeLineResponseOptional.get().getTimeLineResponse().getTimeLineResponse());
             return timeLineResponseOptional.get().getTimeLineResponse();
         }
-        List<String> timeLineList = Collections.emptyList();
-        timeLineResponse.setTimeLineResponse(timeLineList);
-        Twitter twitter = null;
+        List<Timelines> timelines = new ArrayList<>();
+        timeLineResponses.setTimelineResponse(timelines);
         try {
-            twitter = twitterDriver.getTwitterHandle();
-            timeLineList = twitter.getHomeTimeline()
+            Twitter twitter = twitterDriver.getTwitterHandle();
+            final Map<String, Map<String, Date>> timeLineWithId = new HashMap<>();
+            twitter.getHomeTimeline()
                     .stream()
-                    .map(Status::getText)
-                    .filter(text -> text.contains(filter))
-                    .collect(Collectors.toList());
-            if (timeLineList.size() == 0) {
+                    .forEach(timeline -> {
+                        timeLineWithId.put(Long.toString(timeline.getId()), new HashMap<String, Date>() {{
+                            put(timeline.getText(), timeline.getCreatedAt());
+                        }});
+                    });
+
+            if (timeLineWithId.size() == 0) {
                 throw new WebApplicationException("There are no messages in your timeline" , Response.Status.NOT_FOUND);
             }
-            log.debug("Timeline received : {} ", timeLineList.toString());
-            timeLineResponse.setTimeLineResponse(timeLineList);
-            timeLineResponse.setStatus(Response.Status.OK);
+            log.debug("Timeline received : {} ", timeLineWithId.toString());
+            for (Map.Entry<String, Map<String, Date>> entry: timeLineWithId.entrySet()) {
+                for (Map.Entry<String, Date> entryValue : entry.getValue().entrySet()) {
+                    timelines.add(new Timelines(entry.getKey(), entryValue.getKey(), entryValue.getValue()));
+                }
+            }
+            timeLineResponses.setStatus(Response.Status.OK);
         } catch (TwitterException e) {
             throw new WebApplicationException(e.getMessage(), e.getStatusCode());
         }
-        applicationCache.updateCache(filter, timeLineResponse);
+        applicationCache.updateCache(filter, timeLineResponses);
 //        return new TimeLineResponseView(TimeLineResponseView.Template.TIMELINE_RESPONSE, timeLineResponse.getTimeLineResponse());
-        return timeLineResponse;
+        return timeLineResponses;
     }
 }

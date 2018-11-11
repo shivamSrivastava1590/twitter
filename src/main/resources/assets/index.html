@@ -3,16 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>Twitter Application</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script src="twitter.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
 </head>
 <body>
 
-<h2>Twitter App</h2>
-<button id="timelineResponse" onclick="updateStatus(); return false">Get Timeline</button>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Twitter App</a>
+        </div>
+        <button type="button" class="btn btn-primary navbar-btn" id="timelineResponse" onclick="updateStatus(); return false">Get Timeline</button>
+    </div>
+</nav>
 
 <div id="output">
 </div>
 
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="twitter.js"></script>
 </body>
 </html>

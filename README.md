@@ -85,3 +85,14 @@ What things you need to install the software.
     (GET) http://localhost:8080/api/1.0/twitter/timeline
     (GET) http://localhost:8080/api/1.0/twitter/timeline?filter=filterWord
 ```
+
+#### (createBlocks)
+
+```
+1. Create a file 'keys.sh' which contains your keys to access twitter, you have to export those keys in the file.
+2. Run command 'mvn clean install' to create executable jar file.
+3. Run command './process.sh' to start your service.
+4. Open 'localhost:8080/index.html' in browser.
+5. Click get timeline to fetch timeline.
+6. Click on individial timeline to open in twitter.
+```

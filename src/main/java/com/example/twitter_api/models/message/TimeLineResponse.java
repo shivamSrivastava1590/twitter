@@ -1,22 +1,21 @@
 package com.example.twitter_api.models.message;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import javax.ws.rs.core.Response;
 import java.io.Serializable;
 import java.util.List;
 
 public class TimeLineResponse implements Serializable{
 
-    private List<String> timeLineResponse;
     private Response.Status status;
+    private List<Timelines> timelineResponses;
 
     public TimeLineResponse() {
     }
 
-    public TimeLineResponse(List<String> timeLineResponse, Response.Status status) {
-        this.timeLineResponse = timeLineResponse;
+    public TimeLineResponse(Response.Status status, List<Timelines> timelineResponses) {
         this.status = status;
+        this.timelineResponses = timelineResponses;
     }
 
     @JsonProperty
@@ -29,11 +28,11 @@ public class TimeLineResponse implements Serializable{
     }
 
     @JsonProperty
-    public List<String> getTimeLineResponse() {
-        return timeLineResponse;
+    public List<Timelines> getTimelineResponse() {
+        return timelineResponses;
     }
 
-    public void setTimeLineResponse(List<String> timeLineResponse) {
-        this.timeLineResponse = timeLineResponse;
+    public void setTimelineResponse(List<Timelines> timelineResponses) {
+        this.timelineResponses = timelineResponses;
     }
 }
