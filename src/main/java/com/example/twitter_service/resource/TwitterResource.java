@@ -71,27 +71,12 @@ public class TwitterResource {
         timeLineResponses.setTimelineResponse(timelines);
         try {
             Twitter twitter = twitterDriver.getTwitterHandle();
-
-
-//            twitter.showUser(twitter.getHomeTimeline().get(0).getUser().getId()).getProfileImageURL();
-
             final Map<String, Map<String, Date>> timeLineWithId = new HashMap<>();
-//            twitter.getHomeTimeline()
-//                    .stream()
-//                    .forEach(timeline -> {
-//                        timeLineWithId.put(Long.toString(timeline.getId() + " " + twitter.showUser(timeline.getUser().getId()).getProfileImageURL()), new HashMap<String, Date>() {{
-//                            put(timeline.getText(), timeline.getCreatedAt());
-//                        }});
-//                    });
-
-
             for (Status timeline : twitter.getHomeTimeline()) {
                 timeLineWithId.put(Long.toString(timeline.getId()) + " " + twitter.showUser(timeline.getUser().getId()).getProfileImageURL(),  new HashMap<String, Date>() {{
                     put(timeline.getText(), timeline.getCreatedAt());
                 }});
             }
-
-
             if (timeLineWithId.size() == 0) {
                 throw new WebApplicationException("There are no messages in your timeline" , Response.Status.NOT_FOUND);
             }
