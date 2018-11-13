@@ -8,15 +8,16 @@ function updateStatus(){
             console.log(response);
             var timeline = response.timelineResponse;
             console.log(timeline);
-            var item = '<table class="table table-striped"> <tbody>';
+            var item = '<div class="result"><ul>';
             for (var i = 0; i < timeline.length; i++) {
                 var hrefLink = "https://twitter.com/intent/status/" + timeline[i].timeLineResponseId;
-                item += '<div><tr>'                                                                                                                             +
-                            "<td onclick='openInNewTab(\""+ hrefLink + "\")'>" + '<span style="color: beige">' + timeline[i].timelineResponse + '</span></td>'       +
-                            '<td>' + new Date(timeline[i].timelineResponseDate) + '</td>'                                                                  +
-                        '</tr></div>';
+                item += '<iv class="listitem">'                                                                                                  +
+                    "<div onclick='openInNewTab(\""+ hrefLink + "\")'>" + '<a>' + timeline[i].timelineResponse + '</a>' + '</div>'       +
+                    '<div><img src="' + timeline[i].timeLineProfileImageUrl +'"></div>'+
+                    '<div class="tweetDate">' + new Date(timeline[i].timelineResponseDate) + '</div>' +
+                    '</li>';
             }
-            item += '</tbody></table>';
+            item += '</ul>';
             main.html(item);
         }
     });

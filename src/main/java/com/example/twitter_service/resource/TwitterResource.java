@@ -71,14 +71,26 @@ public class TwitterResource {
         timeLineResponses.setTimelineResponse(timelines);
         try {
             Twitter twitter = twitterDriver.getTwitterHandle();
+
+
+//            twitter.showUser(twitter.getHomeTimeline().get(0).getUser().getId()).getProfileImageURL();
+
             final Map<String, Map<String, Date>> timeLineWithId = new HashMap<>();
-            twitter.getHomeTimeline()
-                    .stream()
-                    .forEach(timeline -> {
-                        timeLineWithId.put(Long.toString(timeline.getId()), new HashMap<String, Date>() {{
-                            put(timeline.getText(), timeline.getCreatedAt());
-                        }});
-                    });
+//            twitter.getHomeTimeline()
+//                    .stream()
+//                    .forEach(timeline -> {
+//                        timeLineWithId.put(Long.toString(timeline.getId() + " " + twitter.showUser(timeline.getUser().getId()).getProfileImageURL()), new HashMap<String, Date>() {{
+//                            put(timeline.getText(), timeline.getCreatedAt());
+//                        }});
+//                    });
+
+
+            for (Status timeline : twitter.getHomeTimeline()) {
+                timeLineWithId.put(Long.toString(timeline.getId()) + " " + twitter.showUser(timeline.getUser().getId()).getProfileImageURL(),  new HashMap<String, Date>() {{
+                    put(timeline.getText(), timeline.getCreatedAt());
+                }});
+            }
+
 
             if (timeLineWithId.size() == 0) {
                 throw new WebApplicationException("There are no messages in your timeline" , Response.Status.NOT_FOUND);
@@ -86,7 +98,8 @@ public class TwitterResource {
             log.debug("Timeline received : {} ", timeLineWithId.toString());
             for (Map.Entry<String, Map<String, Date>> entry: timeLineWithId.entrySet()) {
                 for (Map.Entry<String, Date> entryValue : entry.getValue().entrySet()) {
-                    timelines.add(new Timelines(entry.getKey(), entryValue.getKey(), entryValue.getValue()));
+                    String[] timelineIdAndImage = entry.getKey().split(" ");
+                    timelines.add(new Timelines(timelineIdAndImage[0], timelineIdAndImage[1], entryValue.getKey(), entryValue.getValue()));
                 }
             }
             timeLineResponses.setStatus(Response.Status.OK);

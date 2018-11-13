@@ -1,0 +1,72 @@
+body {
+    margin: 0 !important;
+    padding: 0 !important;
+    font-family: 'Arial', 'serif';
+}
+
+.nav {
+    background-color: #595959;
+    color: #ffffff;
+    list-style: none;
+    text-align: center;
+    padding: 20px 0 20px 0;
+    margin: 0;
+}
+
+.nav > li {
+    display: inline-block;
+    padding-right: 50px;
+}
+
+.nav > li > a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.nav > li > a:hover {
+    color: #c1c1c1;
+}
+
+.btn {
+    background-color: #f1f1f1;
+    color: black;
+    font-size: 16px;
+    padding: 4px 17px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.btn:hover {
+    color: #c1c1c1;
+}
+
+.listitem {
+    padding: 8px;
+    border: #999 1px none;
+    list-style: none;
+}
+
+.listitem  {
+    background: #e8f5fd;
+}
+
+.listitem:nth-child(odd) {
+    background: #e9e9e9;
+}
+
+li div a:hover {
+    text-decoration: underline;
+    color: #008CBA;
+}
+
+.tweetDate {
+    font-size: 13px;
+    text-align: right
+}
+
+div img {
+    border-radius: 50%;
+    margin-top: 5px;
+}

@@ -10,12 +10,14 @@ public class Timelines implements Serializable {
     private String timelineResponse;
     private Date timelineResponseDate;
     private String timeLineResponseId;
+    private String timeLineProfileImageUrl;
 
     public Timelines() {
     }
 
-    public Timelines(String timeLineResponseId, String timelineResponse, Date timelineResponseDate) {
+    public Timelines(String timeLineResponseId, String timeLineProfileImageUrl, String timelineResponse, Date timelineResponseDate) {
         this.timeLineResponseId = timeLineResponseId;
+        this.timeLineProfileImageUrl = timeLineProfileImageUrl;
         this.timelineResponse = timelineResponse;
         this.timelineResponseDate = timelineResponseDate;
     }
@@ -27,6 +29,15 @@ public class Timelines implements Serializable {
 
     public void setTimeLineResponseId(String timeLineId) {
         this.timeLineResponseId = timeLineId;
+    }
+
+    @JsonProperty
+    public String getTimeLineProfileImageUrl() {
+        return timeLineProfileImageUrl;
+    }
+
+    public void setTimeLineProfileImageUrl(String timeLineProfileImageUrl) {
+        this.timeLineProfileImageUrl = timeLineProfileImageUrl;
     }
 
     @JsonProperty
