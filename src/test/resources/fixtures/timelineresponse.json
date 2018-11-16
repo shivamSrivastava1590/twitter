@@ -1,7 +1,11 @@
 {
-  "timeLineResponse": [
-    "response_1",
-    "response_2"
-  ],
-  "status": "OK"
+  "status": "OK",
+  "timelineResponse": [
+    {
+      "timelineResponse": "timelineResponse",
+      "timelineResponseDate": "1542306630000",
+      "timeLineResponseId": "timeLineResponseId",
+      "timeLineProfileImageUrl": "timeLineProfileImageUrl"
+    }
+  ]
 }

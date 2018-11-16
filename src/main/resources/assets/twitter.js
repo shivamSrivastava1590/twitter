@@ -11,11 +11,11 @@ function updateStatus(){
             var item = '<div class="result"><ul>';
             for (var i = 0; i < timeline.length; i++) {
                 var hrefLink = "https://twitter.com/intent/status/" + timeline[i].timeLineResponseId;
-                item += '<iv class="listitem">'                                                                                                  +
+                item += '<div class="listitem">'                                                                                                  +
                     "<div onclick='openInNewTab(\""+ hrefLink + "\")'>" + '<a>' + timeline[i].timelineResponse + '</a>' + '</div>'       +
                     '<div><img src="' + timeline[i].timeLineProfileImageUrl +'"></div>'+
                     '<div class="tweetDate">' + new Date(timeline[i].timelineResponseDate) + '</div>' +
-                    '</li>';
+                    '</div>';
             }
             item += '</ul>';
             main.html(item);
