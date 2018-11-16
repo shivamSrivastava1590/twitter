@@ -13,7 +13,6 @@ import twitter4j.Twitter;
 import twitter4j.TwitterException;
 
 import javax.inject.Inject;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import java.util.*;
 
